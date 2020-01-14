@@ -2,7 +2,6 @@ import signal
 import os
 import time
 import random
-
 from alarmexception import AlarmException
 from getch import _getChUnix as getChar
 from background import back,board
@@ -12,7 +11,6 @@ from obs import obst,obst1,obst2
 from colorama import init, Fore
 init()
 
-k = 0
 en=[]
 obss=[]
 itr=0
@@ -39,11 +37,20 @@ for j in range(205,2000,random.randint(175,225)):
     obss.append(obst2(j))
     obss[itr].obs1()
     itr+=1
-# os.system('cls' if os.name=='nt' else 'clear')
+os.system('cls' if os.name=='nt' else 'clear')
+itr=0
+with open("a.txt") as file_in:
+    lines = file_in.readlines()
+for i in range(23,23+len(lines)):
+    for j in range(100,100+len(lines[i-23])):
+        if lines[i-23][j-100] == '\t' or lines[i-23][j-100]=='\n':
+            board.canvas[i][j]=' '
+        else :
+            board.canvas[i][j]=lines[i-23][j-100]            
 while True:
     print('\033[0;0H')
     for i in range(0,50):
-        for j in range(0+k, 200+k):
+        for j in range(0+itr, 200+itr):
                 print(Fore.GREEN + board.canvas[i][j], end="")
         print()
     def alarmhandler(signum, frame):
@@ -84,12 +91,9 @@ while True:
 
     elif char=='q'or char=='Q':
         quit()
-
     else:
         cor.pos1()
         cor.gravity()
         cor.pos()    
-    k += 1
+    itr += 1
     cor.inc()
-    # time.sleep(1)
-
