@@ -21,4 +21,12 @@ class coin:
 		board.canvas[36][self.y]='$'
 		board.canvas[36][self.y+1]='$'
 		board.canvas[36][self.y+2]='$'
+
+class speed(coin):
+	def pcoin(self):
+		board.canvas[20][self.y]='N'
+	def pcoin1(self):
+		board.canvas[43][self.y]='N'
+
+
 			

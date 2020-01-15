@@ -8,13 +8,14 @@ from background import back,board
 from movement import cor
 from person import mandolin,enemy,person
 from obs import obst,obst1,obst2
-from co import coin
+from co import coin,speed
 from colorama import init, Fore
 init()
 
 en=[]
 obss=[]
 coins=[]
+run=[]
 itr=0
 mandolin(40)
 poy=40
@@ -24,6 +25,16 @@ for j in range(220,2000,random.randint(80,120)):
     en[itr].define()
     itr+=1
 itr=0        
+for j in range(300,2000,random.randint(500,600)):
+    run.append(speed(j))
+    run[itr].pcoin()
+    itr+=1
+    ro=random.randint(250,400)
+    if j+ro<2000:
+        run.append(speed(j+ro))
+        run[itr].pcoin1()
+        itr+=1
+itr=0
 for j in range(260,2000,random.randint(170,250)):
     coins.append(coin(j))
     coins[itr].pcoin()
@@ -54,6 +65,7 @@ for j in range(205,2000,random.randint(175,225)):
 itr=0
 lipr=4
 lint=4
+ti=time.time()
 
 with open("a.txt") as file_in:
     lines = file_in.readlines()
@@ -73,6 +85,8 @@ while True:
         for j in range(0+itr, 200+itr):
                 print(Fore.GREEN + board.canvas[i][j], end="")
         print()
+    if (time.time()-ti)>10:
+        cor.vul()
     def alarmhandler(signum, frame):
         raise AlarmException
 
@@ -94,6 +108,12 @@ while True:
         cor.pos1()
         cor.right()
         cor.pos()
+    elif char==' ':
+        cor.invin()
+        ti=time.time()
+
+
+
     elif char=='a' or char=='A':
         cor.pos1()
         cor.left()
