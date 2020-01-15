@@ -66,6 +66,7 @@ itr=0
 lipr=4
 lint=4
 ti=time.time()
+sti=time.time()
 
 with open("a.txt") as file_in:
     lines = file_in.readlines()
@@ -79,7 +80,7 @@ os.system('cls' if os.name=='nt' else 'clear')
 
 while True:
     print('\033[0;0H')
-    print('score=',cor.call(),'    life=',cor.call1())
+    print('score=',cor.call(),'    life=',cor.call1(),'     time elapsed=',"{:.0f}".format(time.time()-sti))
 
     for i in range(0,50):
         for j in range(0+itr, 200+itr):
