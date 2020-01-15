@@ -151,4 +151,8 @@ class mmt:
 		return self.__score	
 	def call1(self):
 		return self.__life
+	def booster(self):
+		return self.__boost
+	def cshield(self):
+		return self.__shield 		
 cor=mmt(46,40,4)

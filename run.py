@@ -80,7 +80,17 @@ os.system('cls' if os.name=='nt' else 'clear')
 
 while True:
     print('\033[0;0H')
-    print('score=',cor.call(),'    life=',cor.call1(),'     time elapsed=',"{:.0f}".format(time.time()-sti))
+    if cor.booster()==0:
+        c='deactivated '
+    else:
+        c='activated '
+
+    if cor.cshield()==0:
+        d='deactivated '
+    else:
+        d='activated '
+            
+    print('score =',cor.call(),'    life =',cor.call1(),'     time elapsed =',"{:.0f}".format(time.time()-sti),'       shield =',d,'       nitros =',c)
 
     for i in range(0,50):
         for j in range(0+itr, 200+itr):
