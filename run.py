@@ -84,7 +84,6 @@ while True:
         c='deactivated '
     else:
         c='activated '
-
     if cor.cshield()==0:
         d='deactivated '
     else:
@@ -94,7 +93,11 @@ while True:
 
     for i in range(0,50):
         for j in range(0+itr, 200+itr):
-                print(Fore.GREEN + board.canvas[i][j], end="")
+                if board.canvas[i][j]!='$':
+                    print(Fore.GREEN + board.canvas[i][j], end="")
+                elif board.canvas[i][j]=='$':
+                    print(Fore.YELLOW + board.canvas[i][j], end="")
+
         print()
     if (time.time()-ti)>10:
         cor.vul()
@@ -122,9 +125,6 @@ while True:
     elif char==' ':
         cor.invin()
         ti=time.time()
-
-
-
     elif char=='a' or char=='A':
         cor.pos1()
         cor.left()
@@ -137,6 +137,8 @@ while True:
         cor.pos1()
         cor.down()
         cor.pos()
+    elif char=='z' or char=='Z':
+        pass
 
     elif char=='q'or char=='Q':
         quit()
