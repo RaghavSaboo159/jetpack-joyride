@@ -8,26 +8,40 @@ from background import back,board
 from movement import cor
 from person import mandolin,enemy,person
 from obs import obst,obst1,obst2
+from co import coin
 from colorama import init, Fore
 init()
 
 en=[]
 obss=[]
+coins=[]
 itr=0
-mandolin(40,5)
+mandolin(40)
 poy=40
 pox=5
 for j in range(220,2000,random.randint(80,120)):
     en.append(enemy(j))
     en[itr].define()
     itr+=1
+itr=0        
+for j in range(260,2000,random.randint(170,250)):
+    coins.append(coin(j))
+    coins[itr].pcoin()
+    itr+=1
+    ro=random.randint(125,169)
+    if j+ro<2000:
+        coins.append(coin(j+ro))
+        coins[itr].pcoin1()
+        itr+=1
+
 itr=0
 for j in range(210,2000,random.randint(175,225)):
     obss.append(obst(j))
     obss[itr].obs1()
     itr+=1
-    if j+random.randint(175,250)<2000:
-        obss.append(obst(j+150))
+    ro=random.randint(125,174)
+    if j+ro<2000:
+        obss.append(obst(j+ro))
         obss[itr].obs2()
         itr+=1
 for j in range(205,2000,random.randint(175,225)):
@@ -37,8 +51,10 @@ for j in range(205,2000,random.randint(175,225)):
     obss.append(obst2(j))
     obss[itr].obs1()
     itr+=1
-os.system('cls' if os.name=='nt' else 'clear')
 itr=0
+lipr=4
+lint=4
+
 with open("a.txt") as file_in:
     lines = file_in.readlines()
 for i in range(23,23+len(lines)):
@@ -47,18 +63,20 @@ for i in range(23,23+len(lines)):
             board.canvas[i][j]=' '
         else :
             board.canvas[i][j]=lines[i-23][j-100]            
+os.system('cls' if os.name=='nt' else 'clear')
+
 while True:
     print('\033[0;0H')
+    print('score=',cor.call(),'    life=',cor.call1())
+
     for i in range(0,50):
         for j in range(0+itr, 200+itr):
                 print(Fore.GREEN + board.canvas[i][j], end="")
         print()
     def alarmhandler(signum, frame):
-        ''' input method '''
         raise AlarmException
 
     def user_input(timeout=0.1):
-        ''' input method '''
         signal.signal(signal.SIGALRM, alarmhandler)
         signal.setitimer(signal.ITIMER_REAL, timeout)
         
@@ -97,3 +115,9 @@ while True:
         cor.pos()    
     itr += 1
     cor.inc()
+    if cor.call1()<0:
+        quit()
+    lipr=cor.call1()
+    if((lint-lipr)>=1):
+        time.sleep(0.5)
+    lint=cor.call1()        

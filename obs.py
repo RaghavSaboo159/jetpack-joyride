@@ -3,7 +3,7 @@ import time
 from colorama import init,Fore
 init()
 
-class obst():
+class obst:
 	def __init__(self,posx):
 		self.y=posx
 
@@ -30,3 +30,4 @@ class obst2(obst):
 		board.canvas[40][self.y-1]='-'
 		board.canvas[40][self.y+2]='-'
 		board.canvas[40][self.y-2]='-'
+

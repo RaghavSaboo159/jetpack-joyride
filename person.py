@@ -4,14 +4,12 @@ from colorama import init,Fore
 init()
 
 class person:
-	"""docstring for person"""
 	def __init__(self,posy):
 		self.y=posy
 
 class mandolin(person):
-	def __init__(self,posy,lives):
+	def __init__(self,posy):
 		super().__init__(posy)
-		self.__life=lives
 		board.canvas[46][self.y]='#'
 		board.canvas[47][self.y]='='
 		board.canvas[47][self.y-1]='/'
@@ -19,10 +17,7 @@ class mandolin(person):
 		board.canvas[48][self.y]='-'
 		board.canvas[48][self.y-1]='|'
 		board.canvas[48][self.y+1]='|'
-		
-
-	# def define():
-			
+	
 
 class enemy(person):
 	def define(self):
