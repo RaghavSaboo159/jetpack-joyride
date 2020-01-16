@@ -182,9 +182,13 @@ class mmt:
 			if i!=len(self.bully)-1:
 				if self.flg[i]==0:
 					board.canvas[self.bullx[i]][self.bully[i]]=' '
-				else:
+				elif self.flg[i]==1:
 					board.canvas[self.bullx[i]][self.bully[i]]='$'
 					self.flg[i]=0
+				elif self.flg[i]==2:
+					board.canvas[self.bullx[i]][self.bully[i]]='N'
+					self.flg[i]=0
+
 				if self.checkr[i]==0:
 					self.bully[i]+=4
 			if(self.bully[i]>=self.c+200):
@@ -193,6 +197,9 @@ class mmt:
 				
 				if board.canvas[self.bullx[i]][self.bully[i]]=='$':
 					self.flg[i]=1
+				if board.canvas[self.bullx[i]][self.bully[i]]=='N':
+					self.flg[i]=2
+
 				if i!=len(self.bully)-1:
 					for kk in range(0,4):
 						ft=0
@@ -217,9 +224,13 @@ class mmt:
 		for i in range(len(self.bully)):
 			if self.flg[i]==0:
 				board.canvas[self.bullx[i]][self.bully[i]]=' '
-			else:
+			elif self.flg[i]==1:
 				board.canvas[self.bullx[i]][self.bully[i]]='$'
 				self.flg[i]=0
+			else:
+				board.canvas[self.bullx[i]][self.bully[i]]='N'
+				self.flg[i]=0
+					
 
 			if self.checkr[i]==0:
 				self.bully[i]+=4
@@ -228,6 +239,9 @@ class mmt:
 			if self.checkr[i]==0:	
 				if board.canvas[self.bullx[i]][self.bully[i]]=='$':
 					self.flg[i]=1
+				if board.canvas[self.bullx[i]][self.bully[i]]=='N':
+					self.flg[i]=2
+
 				for kk in range(0,4):
 					ft=0
 					if board.canvas[self.bullx[i]][self.bully[i]-kk]=='|' or  board.canvas[self.bullx[i]][self.bully[i]-kk]=='/' or  board.canvas[self.bullx[i]][self.bully[i]-kk]=='-' or  board.canvas[self.bullx[i]][self.bully[i]-kk]=='\\':
