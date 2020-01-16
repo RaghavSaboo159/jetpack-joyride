@@ -28,6 +28,6 @@ class obst2(obst):
 		board.canvas[40][self.y]='-'
 		board.canvas[40][self.y+1]='-'
 		board.canvas[40][self.y-1]='-'
-		board.canvas[40][self.y+2]='-'
-		board.canvas[40][self.y-2]='-'
+		# board.canvas[40][self.y+2]='-'
+		# board.canvas[40][self.y-2]='-'
 

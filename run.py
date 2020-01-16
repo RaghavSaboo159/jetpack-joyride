@@ -122,30 +122,45 @@ while True:
         cor.pos1()
         cor.right()
         cor.pos()
+        cor.bull()
+    
     elif char==' ':
         cor.invin()
         ti=time.time()
+        cor.bull()
+    
     elif char=='a' or char=='A':
         cor.pos1()
         cor.left()
         cor.pos()
+        cor.bull()
+    
     elif char=='w' or char=='W':
         cor.pos1()
         cor.up()
         cor.pos()
+        cor.bull()
+    
     elif char=='s' or char=='S':
         cor.pos1()
         cor.down()
         cor.pos()
-    elif char=='z' or char=='Z':
-        pass
+        cor.bull()
+    
+    elif char=='j' or char=='J':
+        cor.bullet()
+        cor.pos1()
+        cor.check()
+        cor.pos()
 
     elif char=='q'or char=='Q':
         quit()
     else:
         cor.pos1()
         cor.gravity()
-        cor.pos()    
+        cor.pos()
+        cor.bull()
+
     itr += 1
     cor.inc()
     if cor.call1()<0:
