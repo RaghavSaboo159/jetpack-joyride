@@ -22,6 +22,7 @@ class mmt:
 		self.__itr=0
 		self.__pos=0
 
+	
 	def pos1(self):
 		board.canvas[self.x][self.y] =' '
 		board.canvas[self.x+1][self.y] =' '
@@ -163,7 +164,8 @@ class mmt:
 		board.canvas[self.x+2][self.y-1]='|'
 		board.canvas[self.x+2][self.y+1]='|'
 	def inc(self):
-		self.c+=1	
+		if self.c+200<2000:
+			self.c+=1	
 	def call(self):
 		return self.__score	
 	def call1(self):
@@ -180,18 +182,18 @@ class mmt:
 
 		for i in range(len(self.bully)):
 			if i!=len(self.bully)-1:
-				if self.flg[i]==0:
+				if self.flg[i]==0 and self.bully[i]<=1999:
 					board.canvas[self.bullx[i]][self.bully[i]]=' '
-				elif self.flg[i]==1:
+				elif self.flg[i]==1 and self.bully[i]<=1999:
 					board.canvas[self.bullx[i]][self.bully[i]]='$'
 					self.flg[i]=0
-				elif self.flg[i]==2:
+				elif self.flg[i]==2 and self.bully[i]<=1999:
 					board.canvas[self.bullx[i]][self.bully[i]]='N'
 					self.flg[i]=0
 
 				if self.checkr[i]==0:
 					self.bully[i]+=4
-			if(self.bully[i]>=self.c+200):
+			if(self.bully[i]>=self.c+200) or (self.bully[i]>1999):
 				self.checkr[i]=1
 			if self.checkr[i]==0:	
 				
@@ -222,19 +224,19 @@ class mmt:
 							    
 	def bull(self):
 		for i in range(len(self.bully)):
-			if self.flg[i]==0:
+			if self.flg[i]==0 and self.bully[i]<=1999:
 				board.canvas[self.bullx[i]][self.bully[i]]=' '
-			elif self.flg[i]==1:
+			elif self.flg[i]==1 and self.bully[i]<=1999:
 				board.canvas[self.bullx[i]][self.bully[i]]='$'
 				self.flg[i]=0
-			else:
+			elif self.flg[i]==2 and self.bully[i]<=1999:
 				board.canvas[self.bullx[i]][self.bully[i]]='N'
 				self.flg[i]=0
 					
 
 			if self.checkr[i]==0:
 				self.bully[i]+=4
-			if(self.bully[i]>=self.c+200):
+			if(self.bully[i]>=self.c+200) or (self.bully[i]>1999):
 				self.checkr[i]=1
 			if self.checkr[i]==0:	
 				if board.canvas[self.bullx[i]][self.bully[i]]=='$':
@@ -263,7 +265,9 @@ class mmt:
 		if self.y-1<=self.c and self.__boost==0:
 			self.y+=1
 		if self.y-2<=self.c and self.__boost==1:
-			self.y+2				
+			self.y+2
+	def xcor(self):
+		return self.x						
 
 
 
