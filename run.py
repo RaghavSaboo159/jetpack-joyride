@@ -40,7 +40,7 @@ for j in range(260,1800,random.randint(170,250)):
     coins[itr].pcoin()
     itr+=1
     ro=random.randint(125,169)
-    if j+ro<2000:
+    if j+ro<1800:
         coins.append(coin(j+ro))
         coins[itr].pcoin1()
         itr+=1
@@ -51,7 +51,7 @@ for j in range(210,1800,random.randint(175,225)):
     obss[itr].obs1()
     itr+=1
     ro=random.randint(125,174)
-    if j+ro<2000:
+    if j+ro<1800:
         obss.append(obst(j+ro))
         obss[itr].obs2()
         itr+=1
@@ -67,6 +67,7 @@ lipr=4
 lint=4
 ti=time.time()
 sti=time.time()
+lo=0
 
 with open("a.txt") as file_in:
     lines = file_in.readlines()
@@ -145,33 +146,58 @@ while True:
         cor.pos1()
         cor.right()
         cor.pos()
-        cor.bull()
+        if lo<1800:
+            cor.bull()
+        else:
+            cor.bull1()    
     
     elif char==' ':
         cor.invin()
         ti=time.time()
-        cor.bull()
+        if lo<1800:
+            cor.bull()
+        else:
+            cor.bull1()    
+
+        # cor.bull()
     
     elif char=='a' or char=='A':
         cor.pos1()
         cor.left()
         cor.pos()
-        cor.bull()
+        # cor.bull()
+        if lo<1800:
+            cor.bull()
+        else:
+            cor.bull1()    
     
     elif char=='w' or char=='W':
         cor.pos1()
         cor.up()
         cor.pos()
-        cor.bull()
+        # cor.bull()
+        if lo<1800:
+            cor.bull()
+        else:
+            cor.bull1()    
     
     elif char=='s' or char=='S':
         cor.pos1()
         cor.down()
         cor.pos()
-        cor.bull()
+        # cor.bull()
+        if lo<1800:
+            cor.bull()
+        else:
+            cor.bull1()    
     
     elif char=='j' or char=='J':
-        cor.bullet()
+        if lo<1800:
+            cor.bullet()
+        else:
+            cor.bullet1()    
+
+        # cor.bullet()
         cor.pos1()
         cor.check()
         cor.pos()
@@ -182,14 +208,23 @@ while True:
         cor.pos1()
         cor.gravity()
         cor.pos()
-        cor.bull()
+        # cor.bull()
+        if lo<1800:
+            cor.bull()
+        else:
+            cor.bull1()    
+
 
     if (itr+200<2000):
         itr += 1
+    else:
+        if lo%6==0:
+            cor.enem(xr)    
     cor.inc()
     if cor.call1()<0:
         quit()
     lipr=cor.call1()
     if((lint-lipr)>=1):
         time.sleep(0.5)
-    lint=cor.call1()        
+    lint=cor.call1()
+    lo+=1        

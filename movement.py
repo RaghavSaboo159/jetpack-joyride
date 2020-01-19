@@ -7,12 +7,22 @@ class mmt:
 	bully=[]
 	checkr=[]
 	flg=[]
+	enex=[]
+	eney=[]
+	checkr1=[]
+	flg1=[]
+	bullxx=[]
+	bullyy=[]
+	checkrr=[]
+	flgg=[]
+
 
 	def __init__(self,pox,poy,lives):
 		self.x=pox
 		self.y=poy
 		self.c=0
 		self.__life=lives
+		self.__enel=30
 		self.__score=0	
 		self.__boost=0
 		self.__timer=0
@@ -267,9 +277,114 @@ class mmt:
 		if self.y-2<=self.c and self.__boost==1:
 			self.y+2
 	def xcor(self):
-		return self.x						
+		return self.x	
+	def enem(self,xco):
+		self.enex.append(xco+1)
+		self.eney.append(1968)
+		self.checkr1.append(0)
+		self.flg1.append(0)
 
+		for i in range(len(self.eney)):
+			if i!=len(self.eney)-1:
+				if self.flg1[i]==0 and self.eney[i]>=1800:
+					board.canvas[self.enex[i]][self.eney[i]]=' '
+				elif self.flg1[i]==1 and self.eney[i]>=1800:
+					board.canvas[self.enex[i]][self.eney[i]]='$'
+					self.flg1[i]=0
+				elif self.flg1[i]==2 and self.eney[i]>=1800:
+					board.canvas[self.enex[i]][self.eney[i]]='N'
+					self.flg1[i]=0
 
+				if self.checkr1[i]==0:
+					self.eney[i]-=4
+			if(self.eney[i]<1800):
+				self.checkr1[i]=1
+			if self.checkr1[i]==0:	
+				
+				if board.canvas[self.enex[i]][self.eney[i]]=='$':
+					self.flg1[i]=1
+				if board.canvas[self.enex[i]][self.eney[i]]=='N':
+					self.flg1[i]=2
 
-			 		
+				if i!=len(self.eney)-1:
+					for kk in range(0,4):
+						ft=0
+						if board.canvas[self.enex[i]][self.eney[i]+kk]=='|' or  board.canvas[self.enex[i]][self.eney[i]+kk]=='/' or  board.canvas[self.enex[i]][self.eney[i]+kk]=='-' or  board.canvas[self.enex[i]][self.eney[i]+kk]=='\\' or board.canvas[self.enex[i]][self.eney[i]+kk]=='#':
+							self.__life-=1
+							ft=1
+							self.checkr1[i]=1	
+					if ft==0:	
+					    board.canvas[self.enex[i]][self.eney[i]]='<'
+				else:
+					    board.canvas[self.enex[i]][self.eney[i]]='<'
+	def bullet1(self):
+		self.bullxx.append(self.x+1)
+		self.bullyy.append(self.y+2)
+		self.checkrr.append(0)
+		self.flgg.append(0)
+
+		for i in range(len(self.bullyy)):
+			if i!=len(self.bullyy)-1:
+				if self.flgg[i]==0 and self.bullyy[i]<=1999:
+					board.canvas[self.bullxx[i]][self.bullyy[i]]=' '
+				elif self.flgg[i]==1 and self.bullyy[i]<=1999:
+					board.canvas[self.bullxx[i]][self.bullyy[i]]='$'
+					self.flgg[i]=0
+				elif self.flgg[i]==2 and self.bullyy[i]<=1999:
+					board.canvas[self.bullxx[i]][self.bullyy[i]]='N'
+					self.flgg[i]=0
+
+				if self.checkrr[i]==0:
+					self.bullyy[i]+=4
+			if (self.bullyy[i]>1999):
+				self.checkrr[i]=1
+			if self.checkrr[i]==0:	
+				
+				if board.canvas[self.bullxx[i]][self.bullyy[i]]=='$':
+					self.flgg[i]=1
+				if board.canvas[self.bullxx[i]][self.bullyy[i]]=='N':
+					self.flgg[i]=2
+
+				if i!=len(self.bullyy)-1:
+					for kk in range(0,4):
+						ft=0
+						if board.canvas[self.bullxx[i]][self.bullyy[i]-kk]=='|' or  board.canvas[self.bullxx[i]][self.bullyy[i]-kk]=='/' or  board.canvas[self.bullxx[i]][self.bullyy[i]-kk]=='(' or  board.canvas[self.bullxx[i]][self.bullyy[i]-kk]=='\\'or board.canvas[self.bullxx[i]][self.bullyy[i]-kk]=="'":
+							self.__enel-=1
+							ft=1
+							self.checkrr[i]=1	
+					if ft==0:	
+					    board.canvas[self.bullxx[i]][self.bullyy[i]]='>'
+				else:
+					    board.canvas[self.bullxx[i]][self.bullyy[i]]='>'
+							    
+	def bull1(self):
+		for i in range(len(self.bullyy)):
+			if self.flgg[i]==0 and self.bullyy[i]<=1999:
+				board.canvas[self.bullxx[i]][self.bullyy[i]]=' '
+			elif self.flgg[i]==1 and self.bullyy[i]<=1999:
+				board.canvas[self.bullxx[i]][self.bullyy[i]]='$'
+				self.flgg[i]=0
+			elif self.flgg[i]==2 and self.bullyy[i]<=1999:
+				board.canvas[self.bullxx[i]][self.bullyy[i]]='N'
+				self.flgg[i]=0
+					
+
+			if self.checkrr[i]==0:
+				self.bullyy[i]+=4
+			if (self.bullyy[i]>1999):
+				self.checkrr[i]=1
+			if self.checkrr[i]==0:	
+				if board.canvas[self.bullxx[i]][self.bullyy[i]]=='$':
+					self.flgg[i]=1
+				if board.canvas[self.bullxx[i]][self.bullyy[i]]=='N':
+					self.flgg[i]=2
+
+				for kk in range(0,4):
+					ft=0
+					if board.canvas[self.bullxx[i]][self.bullyy[i]-kk]=='|' or  board.canvas[self.bullxx[i]][self.bullyy[i]-kk]=='/' or  board.canvas[self.bullxx[i]][self.bullyy[i]-kk]=='(' or  board.canvas[self.bullxx[i]][self.bullyy[i]-kk]=='\\'or board.canvas[self.bullxx[i]][self.bullyy[i]-kk]=="'":
+						self.__enel-=1
+						ft=1
+						self.checkrr[i]=1	
+				if ft==0:	
+				    board.canvas[self.bullxx[i]][self.bullyy[i]]='>'
 cor=mmt(46,40,4)
