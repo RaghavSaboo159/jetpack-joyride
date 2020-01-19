@@ -8,7 +8,7 @@ from background import back,board
 from movement import cor
 from person import mandolin,enemy,person
 from obs import obst,obst1,obst2
-from co import coin,speed
+from co import coin,speed,magnet
 from colorama import init, Fore
 init()
 
@@ -16,6 +16,7 @@ en=[]
 obss=[]
 coins=[]
 run=[]
+mag=[]
 itr=0
 mandolin(40)
 poy=40
@@ -34,6 +35,17 @@ for j in range(300,1800,random.randint(500,600)):
         run.append(speed(j+ro))
         run[itr].pcoin1()
         itr+=1
+itr=0
+for j in range(300,1800,random.randint(500,600)):
+    mag.append(magnet(j))
+    mag[itr].pcoin()
+    itr+=1
+    ro=random.randint(250,400)
+    if j+ro<2000:
+        mag.append(speed(j+ro))
+        mag[itr].pcoin1()
+        itr+=1
+
 itr=0
 for j in range(260,1800,random.randint(170,250)):
     coins.append(coin(j))
@@ -113,6 +125,18 @@ while True:
                 else :
                     board.canvas[i][j]=lnes[i-cor.xcor()][j-1970]            
         xr=cor.xcor()            
+
+    for i in range(len(mag)):
+        if mag[i].y-cor.ycor()>=0 and mag[i].y-cor.ycor()<=20:
+            cor.pos1()
+            cor.y+=2 
+            cor.pos()
+
+        if mag[i].y-cor.ycor()<0 and cor.ycor()-mag[i].y<=20:
+            cor.pos1()
+            cor.y-=2
+            cor.pos()
+
 
     for i in range(0,50):
         for j in range(0+itr, 200+itr):

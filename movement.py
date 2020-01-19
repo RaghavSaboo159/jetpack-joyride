@@ -278,6 +278,9 @@ class mmt:
 			self.y+2
 	def xcor(self):
 		return self.x	
+	def ycor(self):
+		return self.y	
+
 	def enem(self,xco):
 		self.enex.append(xco+1)
 		self.eney.append(1968)

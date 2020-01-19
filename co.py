@@ -28,5 +28,10 @@ class speed(coin):
 	def pcoin1(self):
 		board.canvas[43][self.y]='N'
 
+class magnet(coin):
+	def pcoin(self):
+		board.canvas[30][self.y]='M'
+	def pcoin1(self):
+		board.canvas[38][self.y]='M'
 
 			
