@@ -11,16 +11,24 @@ class coin:
 		board.canvas[5][self.y]='$'
 		board.canvas[5][self.y+1]='$'
 		board.canvas[5][self.y+2]='$'
+		board.canvas[5][self.y+3]='$'
+		board.canvas[5][self.y+4]='$'
 		board.canvas[6][self.y]='$'
 		board.canvas[6][self.y+1]='$'
 		board.canvas[6][self.y+2]='$'
+		board.canvas[6][self.y+3]='$'
+		board.canvas[6][self.y+4]='$'
 	def pcoin1(self):	
 		board.canvas[35][self.y]='$'
 		board.canvas[35][self.y+1]='$'
 		board.canvas[35][self.y+2]='$'
+		board.canvas[35][self.y+3]='$'
+		board.canvas[35][self.y+4]='$'
 		board.canvas[36][self.y]='$'
 		board.canvas[36][self.y+1]='$'
 		board.canvas[36][self.y+2]='$'
+		board.canvas[36][self.y+3]='$'
+		board.canvas[36][self.y+4]='$'
 
 class speed(coin):
 	def pcoin(self):

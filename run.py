@@ -9,7 +9,7 @@ from movement import cor
 from person import mandolin,enemy,person
 from obs import obst,obst1,obst2
 from co import coin,speed,magnet
-from colorama import init, Fore
+from colorama import init, Fore,Style
 init()
 
 en=[]
@@ -42,7 +42,7 @@ for j in range(300,1800,random.randint(500,600)):
     itr+=1
     ro=random.randint(250,400)
     if j+ro<2000:
-        mag.append(speed(j+ro))
+        mag.append(magnet(j+ro))
         mag[itr].pcoin1()
         itr+=1
 
@@ -110,9 +110,7 @@ while True:
         d='deactivated '
     else:
         d='activated '
-            
     print('score =',cor.call(),'    life =',cor.call1(),'     time elapsed =',"{:.0f}".format(time.time()-sti),'       shield =',d,'       nitros =',c)
-
     if (cor.xcor()<=43):
         for i in range(xr,xr+len(lnes)):
             for j in range(1970,1970+len(lnes[i-xr])):
@@ -125,25 +123,50 @@ while True:
                 else :
                     board.canvas[i][j]=lnes[i-cor.xcor()][j-1970]            
         xr=cor.xcor()            
+    else:    
+        for i in range(xr,xr+len(lnes)):
+            for j in range(1970,1970+len(lnes[i-xr])):
+                board.canvas[i][j]=' '            
+
+        for i in range(43,43+len(lnes)):
+            for j in range(1970,1970+len(lnes[i-43])):
+                if lnes[i-43][j-1970] == '\t' or lnes[i-43][j-1970]=='\n':
+                    board.canvas[i][j]=' '
+                else :
+                    board.canvas[i][j]=lnes[i-43][j-1970]            
+        xr=43            
 
     for i in range(len(mag)):
-        if mag[i].y-cor.ycor()>=0 and mag[i].y-cor.ycor()<=20:
+        if mag[i].y-cor.ycor()>=0 and mag[i].y-cor.ycor()<=30:
             cor.pos1()
-            cor.y+=2 
+            if cor.y+1<itr+200-1:
+                cor.y+=2 
             cor.pos()
 
-        if mag[i].y-cor.ycor()<0 and cor.ycor()-mag[i].y<=20:
+        if mag[i].y-cor.ycor()<0 and cor.ycor()-mag[i].y<=30:
             cor.pos1()
-            cor.y-=2
+            if cor.y-1>itr:
+                cor.y-=1
             cor.pos()
-
-
     for i in range(0,50):
         for j in range(0+itr, 200+itr):
-                if board.canvas[i][j]!='$':
-                    print(Fore.GREEN + board.canvas[i][j], end="")
-                elif board.canvas[i][j]=='$':
+                if board.canvas[i][j]=='X' and i<5:
+                    print(Fore.BLUE + board.canvas[i][j], end="")
+
+                elif cor.cshield()==1 and ((i==cor.xcor() and j==cor.ycor()) or (i==cor.xcor()+1 and j==cor.ycor()) or (i==cor.xcor()+1 and j==cor.ycor()+1) or (i==cor.xcor()+1 and j==cor.ycor()-1) or (i==cor.xcor()+2 and j==cor.ycor()) or (i==cor.xcor()+2 and j==cor.ycor()-1) or (i==cor.xcor()+2 and j==cor.ycor()+1)):
+                    print(Fore.WHITE + board.canvas[i][j], end="")
+                elif cor.cshield()==0 and ((i==cor.xcor() and j==cor.ycor()) or (i==cor.xcor()+1 and j==cor.ycor()) or (i==cor.xcor()+1 and j==cor.ycor()+1) or (i==cor.xcor()+1 and j==cor.ycor()-1) or (i==cor.xcor()+2 and j==cor.ycor()) or (i==cor.xcor()+2 and j==cor.ycor()-1) or (i==cor.xcor()+2 and j==cor.ycor()+1)):
+                    print(Fore.CYAN + board.canvas[i][j], end="")
+
+                elif board.canvas[i][j]=='>':
                     print(Fore.YELLOW + board.canvas[i][j], end="")
+                
+                elif board.canvas[i][j]!='$' and i<49:
+                    print(Fore.RED + Style.BRIGHT + board.canvas[i][j], end="")
+                elif board.canvas[i][j]=='$':
+                    print(Fore.YELLOW + Style.BRIGHT + board.canvas[i][j], end="")
+                elif board.canvas[i][j]=='X' and i==49:
+                    print(Fore.GREEN + board.canvas[i][j], end="")
 
         print()
     
@@ -182,68 +205,55 @@ while True:
             cor.bull()
         else:
             cor.bull1()    
-
-        # cor.bull()
-    
     elif char=='a' or char=='A':
         cor.pos1()
         cor.left()
         cor.pos()
-        # cor.bull()
         if lo<1800:
             cor.bull()
         else:
             cor.bull1()    
-    
     elif char=='w' or char=='W':
         cor.pos1()
         cor.up()
         cor.pos()
-        # cor.bull()
         if lo<1800:
             cor.bull()
         else:
             cor.bull1()    
-    
     elif char=='s' or char=='S':
         cor.pos1()
         cor.down()
         cor.pos()
-        # cor.bull()
         if lo<1800:
             cor.bull()
         else:
             cor.bull1()    
-    
     elif char=='j' or char=='J':
         if lo<1800:
             cor.bullet()
         else:
             cor.bullet1()    
-
-        # cor.bullet()
         cor.pos1()
         cor.check()
         cor.pos()
-
     elif char=='q'or char=='Q':
         quit()
     else:
         cor.pos1()
         cor.gravity()
         cor.pos()
-        # cor.bull()
         if lo<1800:
             cor.bull()
         else:
             cor.bull1()    
-
-
     if (itr+200<2000):
         itr += 1
     else:
         if lo%6==0:
-            cor.enem(xr)    
+            cor.enem(xr) 
+        else:
+            cor.enem1()  
     cor.inc()
     if cor.call1()<0:
         quit()
