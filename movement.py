@@ -486,6 +486,10 @@ class mmt:
 			self.y-=(self.y+31	-self._c-200)
 		self.__acc=0		
 	def post1(self):
+		if self.__mgn==1:
+			board.canvas[self.__xx][self.__yy]='M'
+			self.__mgn=0
+
 		lnes1=[]
 		with open("d.txt") as file_in:
 		    lnes1 = file_in.readlines()
@@ -500,6 +504,11 @@ class mmt:
 					# self.x=1
 				elif board.canvas[i][j]=='N':
 					self.__boost=1
+				elif board.canvas[i][j]=='M' :
+						self.__mgn=1
+						self.__xx=i
+						self.__yy=j
+
 		if self.__fc==0:
 			for i in range (xco,xco+len(lnes1)):
 				for j in range(yco,yco+len(lnes1[i-xco])):
@@ -511,6 +520,10 @@ class mmt:
 					except:
 						print(xco,len(lnes1))
 	def clear1(self):
+		# if self.__mgn==1:
+		# 	board.canvas[self.__xx][self.__yy]='M'
+		# 	self.__mgn=0
+
 		lnes1=[]
 		with open("d.txt") as file_in:
 		    lnes1 = file_in.readlines()
@@ -521,6 +534,10 @@ class mmt:
 
 					board.canvas[self.x+i][self.y+j]=' '
 	def clear2(self):
+		# if self.__mgn==1:
+		# 	board.canvas[self.__xx][self.__yy]='M'
+		# 	self.__mgn=0
+
 		lnes=[]
 		with open("c.txt") as file_in:
 		    lnes = file_in.readlines()
@@ -531,6 +548,9 @@ class mmt:
 					board.canvas[self.x+i][self.y+j]=' '
 
 	def post2(self):
+		if self.__mgn==1:
+			board.canvas[self.__xx][self.__yy]='M'
+			self.__mgn=0
 		lnes=[]
 		with open("c.txt") as file_in:
 		    lnes = file_in.readlines()
@@ -540,9 +560,13 @@ class mmt:
 					self.__score+=1
 				elif board.canvas[i][j]=="/" or board.canvas[i][j]=="\\" or board.canvas[i][j]=="-" or board.canvas[i][j]=="|":
 					self.__fc=1
-					# self.x=1
 				elif board.canvas[i][j]=='N':
 					self.__boost=1
+				elif board.canvas[i][j]=='M':
+						self.__mgn=1
+						self.__xx=i
+						self.__yy=j
+
 		if self.__fc==0:
 			for i in range(self.x,self.x+len(lnes)):
 				for j in range(self.y,self.y+len(lnes[i-self.x])):
