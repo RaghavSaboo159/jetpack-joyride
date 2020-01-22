@@ -5,11 +5,11 @@ Miniature Version of JETPACK JOYRIDE
 
 Implemented all the functionalities given in the Assignment with bonus too
 
-#Command to run the game
+# Command to run the game
 	
 	python3 run.py
 
-#Packages required
+# Packages required
 	colorama
 	pip3 install colorama
 # About Game:
@@ -25,7 +25,7 @@ Implemented all the functionalities given in the Assignment with bonus too
    * Follow OOP concepts
    * Powerups like Shields,Powerups and drogon.
 
-#CONTROLS
+# CONTROLS
 	
 	use w to move up
 	use a to move left
