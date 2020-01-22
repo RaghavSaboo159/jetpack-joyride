@@ -1,8 +1,6 @@
 from background import back,board
 import time
-
 class mmt:
-	
 	bullx=[]
 	bully=[]
 	checkr=[]
@@ -15,12 +13,15 @@ class mmt:
 	bullyy=[]
 	checkrr=[]
 	flgg=[]
-
+	drox=[]
+	droy=[]
+	checkr2=[]
+	flg2=[]
 
 	def __init__(self,pox,poy,lives):
 		self.x=pox
 		self.y=poy
-		self.c=0
+		self._c=0
 		self.__life=lives
 		self.__enel=30
 		self.__score=0	
@@ -36,6 +37,7 @@ class mmt:
 		self.__xx=0
 		self.__yy=0
 		self.__px=0
+		self.__fc=0
 	def pos1(self):
 		board.canvas[self.x][self.y] =' '
 		board.canvas[self.x+1][self.y] =' '
@@ -50,16 +52,17 @@ class mmt:
 			self.__mgn=0	
 		if (time.time()-self.__timer)>10 and self.__boost==1 :
 			self.__boost=0
-
-
 	def invin(self):
 		if (self.__shield==0 and self.__time1>=70 and self.__tif==0) or (self.__shield==0 and (time.time()-self.__time1)>=70):
 			self.__shield=1
 			self.__time1=time.time()
-			self.__tif=1
-	def vul(self):
-		self.__shield=0		
-
+	@property
+	def shield(self):
+		return self.__shield
+	
+	@shield.setter
+	def shield(self,x):
+		self.__shield=x
 	def gravity(self):
 		self.__acc+=1
 		if self.__boost==0:
@@ -68,7 +71,7 @@ class mmt:
 			else:
 				if self.x<46:
 					self.x+=1	
-			if self.y-1<=self.c:
+			if self.y-1<=self._c:
 				self.y+=1
 		if self.__boost==1:
 			if self.x<=46-(2*self.__acc):
@@ -76,59 +79,28 @@ class mmt:
 			else:
 				if self.x<46:
 					self.x+=1
-			if self.y-2<=self.c:
+			if self.y-2<=self._c:
 				self.y+=2
-
 	def up(self):
 		if self.__boost==0:
 			if self.x>1:
 				self.x-=1
-				if self.y+1<self.c+200:
-					self.y+=1		
-			if self.y-1<=self.c:
+			# 	if self.y+1<self._c+200:
+			# 		self.y+=1		
+			if self.y-1<=self._c:
 				self.y+=1
 		else:
 			if self.x>2:
 				self.x-=2
-				if self.y+2<self.c+200:
-					self.y+=2		
-			if self.y-2<=self.c:
+				# if self.y+2<self._c+200:
+				# 	self.y+=2		
+			if self.y-2<=self._c:
 				self.y+=2
 		self.__acc=0		
-	def down(self):
-		self.__acc+=1
-		if self.__boost==0:
-			if self.x<=46-self.__acc:
-				self.x+=self.__acc
-				if self.y+1<self.c+200:
-					self.y+=1
-			else:
-				if self.x<46:
-					self.x+=1
-				if self.y+1<self.c+200:
-					self.y+=1
-		
-			if self.y-1<=self.c:
-				self.y+=1
-		if self.__boost==1:
-			if self.x<=46-(2*self.__acc):
-				self.x+=(2*self.__acc)
-				if self.y+2<self.c+200:
-					self.y+=2
-			else:
-				if self.x<46:
-					self.x+=1
-				if self.y+2<self.c+200:
-					self.y+=2
-
-			if self.y-2<=self.c:
-				self.y+=2
-
-
 	def right(self):
 		self.__acc+=1
 		if self.__boost==0:
-			if self.y+1<self.c+200-1:
+			if self.y+1<self._c+200-1:
 				self.y+=2
 			if self.x<=46-(self.__acc):
 				self.x+=self.__acc
@@ -136,7 +108,7 @@ class mmt:
 				if self.x<46:
 					self.x+=1	
 		if self.__boost==1:
-			if self.y+2<self.c+200-1:
+			if self.y+2<self._c+200-1:
 				self.y+=3
 			if self.x<=46-(2*self.__acc):
 				self.x+=(2*self.__acc)
@@ -147,18 +119,17 @@ class mmt:
 	def left(self):
 		self.__acc+=1
 		if self.__boost==0:
-			if self.y-1>self.c:
+			if self.y-1>self._c:
 				self.y-=1
 				if self.x<=46-(self.__acc):
 					self.x+=self.__acc
 				else:
 					if self.x<46:
 						self.x+=1	
-
 			else:
 				self.y+=1
 		if self.__boost==1:
-			if self.y-2>self.c:
+			if self.y-2>self._c:
 				self.y-=2
 				if self.x<=46-(2*self.__acc):
 					self.x+=(2*self.__acc)
@@ -233,13 +204,21 @@ class mmt:
 		board.canvas[self.x+2][self.y]='-'
 		board.canvas[self.x+2][self.y-1]='|'
 		board.canvas[self.x+2][self.y+1]='|'
-	def inc(self):
-		if self.c+200<2000:
-			self.c+=1	
+	@property
+	def c(self):
+		return self._c
+	
+	@c.setter
+	def c(self,x):
+		if self._c+200<2000:
+			self._c+=x	
+	@property
 	def call(self):
 		return self.__score	
+	@property
 	def booster(self):
 		return self.__boost
+	@property
 	def cshield(self):
 		return self.__shield
 	def bullet(self):
@@ -264,7 +243,7 @@ class mmt:
 
 				if self.checkr[i]==0:
 					self.bully[i]+=4
-			if(self.bully[i]>=self.c+200) or (self.bully[i]>1999):
+			if(self.bully[i]>=self._c+200) or (self.bully[i]>1999):
 				self.checkr[i]=1
 			if self.checkr[i]==0:	
 				
@@ -278,8 +257,8 @@ class mmt:
 				for kk in range(0,4):
 					ft=0
 					if board.canvas[self.bullx[i]][self.bully[i]-kk]=='|' or  board.canvas[self.bullx[i]][self.bully[i]-kk]=='/' or  board.canvas[self.bullx[i]][self.bully[i]-kk]=='-' or  board.canvas[self.bullx[i]][self.bully[i]-kk]=='\\':
-						for k in range(-2,3):
-							for l in range(-2,3):
+						for k in range(-5,7):
+							for l in range(-5,7):
 								if board.canvas[self.bullx[i]+k][self.bully[i]+l-kk]!='>' and board.canvas[self.bullx[i]+k][self.bully[i]+l-kk]!='X':
 									board.canvas[self.bullx[i]+k][self.bully[i]+l-kk]=' '
 									ft=1
@@ -309,7 +288,7 @@ class mmt:
 
 			if self.checkr[i]==0:
 				self.bully[i]+=4
-			if(self.bully[i]>=self.c+200) or (self.bully[i]>1999):
+			if(self.bully[i]>=self._c+200) or (self.bully[i]>1999):
 				self.checkr[i]=1
 			if self.checkr[i]==0:	
 				if board.canvas[self.bullx[i]][self.bully[i]]=='$':
@@ -322,8 +301,8 @@ class mmt:
 				for kk in range(0,4):
 					ft=0
 					if board.canvas[self.bullx[i]][self.bully[i]-kk]=='|' or  board.canvas[self.bullx[i]][self.bully[i]-kk]=='/' or  board.canvas[self.bullx[i]][self.bully[i]-kk]=='-' or  board.canvas[self.bullx[i]][self.bully[i]-kk]=='\\':
-						for k in range(-2,3):
-							for l in range(-2,3):
+						for k in range(-5,7):
+							for l in range(-5,7):
 								if board.canvas[self.bullx[i]+k][self.bully[i]+l-kk]!='>' and board.canvas[self.bullx[i]+k][self.bully[i]+l-kk]!='X' :
 									board.canvas[self.bullx[i]+k][self.bully[i]+l-kk]=' '
 									ft=1
@@ -337,12 +316,14 @@ class mmt:
 				    board.canvas[self.bullx[i]][self.bully[i]]='>'
 
 	def check(self):
-		if self.y-1<=self.c and self.__boost==0:
+		if self.y-1<=self._c and self.__boost==0:
 			self.y+=1
-		if self.y-2<=self.c and self.__boost==1:
+		if self.y-2<=self._c and self.__boost==1:
 			self.y+2
+	@property
 	def xcor(self):
 		return self.x	
+	@property
 	def ycor(self):
 		return self.y	
 
@@ -485,7 +466,240 @@ class mmt:
 						self.checkrr[i]=1	
 				if ft==0:	
 				    board.canvas[self.bullxx[i]][self.bullyy[i]]='>'
+	@property
 	def call1(self):
 		return self.__life
-			    
+	@property
+	def calll1(self):
+		return self.__enel
+	def start(self):
+		board.canvas[self.x][self.y] =' '
+		board.canvas[self.x+1][self.y] =' '
+		board.canvas[self.x+1][self.y-1] =' '
+		board.canvas[self.x+1][self.y+1] =' '
+		board.canvas[self.x+2][self.y] =' '
+		board.canvas[self.x+2][self.y-1] =' '
+		board.canvas[self.x+2][self.y+1] =' '
+		if self.x>42:
+			self.x=42
+		if self.y+31>=self._c+200:
+			self.y-=(self.y+31	-self._c-200)
+		self.__acc=0		
+	def post1(self):
+		lnes1=[]
+		with open("d.txt") as file_in:
+		    lnes1 = file_in.readlines()
+		xco=self.x
+		yco=self.y    
+		for i in range(self.x,self.x+len(lnes1)):
+			for j in range(self.y,self.y+len(lnes1[i-self.x])):
+				if board.canvas[i][j]=='$':
+					self.__score+=1
+				elif board.canvas[i][j]=="/" or board.canvas[i][j]=="\\" or board.canvas[i][j]=="-" or board.canvas[i][j]=="|":
+					self.__fc=1
+					# self.x=1
+				elif board.canvas[i][j]=='N':
+					self.__boost=1
+		if self.__fc==0:
+			for i in range (xco,xco+len(lnes1)):
+				for j in range(yco,yco+len(lnes1[i-xco])):
+					try:
+						if lnes1[i-xco][j-yco]=='\t' or lnes1[i-xco][j-yco]=='\n':
+							board.canvas[i][j]=' '
+						else:
+							board.canvas[i][j]=lnes1[i-xco][j-yco]		
+					except:
+						print(xco,len(lnes1))
+	def clear1(self):
+		lnes1=[]
+		with open("d.txt") as file_in:
+		    lnes1 = file_in.readlines()
+
+		for i in range(len(lnes1)):
+			for j in range(len(lnes1[i])):
+				if self.x+i>0 and self.x+i<49 and self.y+j>0 and self.y+j<1900: 
+
+					board.canvas[self.x+i][self.y+j]=' '
+	def clear2(self):
+		lnes=[]
+		with open("c.txt") as file_in:
+		    lnes = file_in.readlines()
+
+		for i in range(len(lnes)):
+			for j in range(len(lnes[i])):
+				if self.x+i>0 and self.x+i<49 and self.y+j>0 and self.y+j<1900: 
+					board.canvas[self.x+i][self.y+j]=' '
+
+	def post2(self):
+		lnes=[]
+		with open("c.txt") as file_in:
+		    lnes = file_in.readlines()
+		for i in range(self.x,self.x+len(lnes)):
+			for j in range(self.y,self.y+len(lnes[i-self.x])):
+				if board.canvas[i][j]=='$':
+					self.__score+=1
+				elif board.canvas[i][j]=="/" or board.canvas[i][j]=="\\" or board.canvas[i][j]=="-" or board.canvas[i][j]=="|":
+					self.__fc=1
+					# self.x=1
+				elif board.canvas[i][j]=='N':
+					self.__boost=1
+		if self.__fc==0:
+			for i in range(self.x,self.x+len(lnes)):
+				for j in range(self.y,self.y+len(lnes[i-self.x])):
+					try:
+						if lnes[i-self.x][j-self.y] == '\t' or lnes[i-self.x][j-self.y]=='\n':
+							board.canvas[i][j]=' '
+						else:
+							board.canvas[i][j]=lnes[i-self.x][j-self.y]
+					except:
+						print(self.x,len(lnes))			
+	def gravity1(self):
+		if self.__boost==0:
+			if self.x<42:
+				self.x+=1
+			if self.y-1<=self.c:
+				self.y+=1
+		if self.__boost==1:
+			if self.x<41:
+				self.x+=2
+			if self.y-2<=self.c:
+				self.y+=2
+	def up1(self):
+		if self.__boost==0:
+			if self.x>1:
+				self.x-=1
+			if self.y-1<=self.c:
+				self.y+=1
+		else:
+			if self.x>2:
+				self.x-=2
+			if self.y-2<=self.c:
+				self.y+=2
+		self.__acc=0		
+	def right1(self):
+		if self.__boost==0:
+			if self.y+31<self.c+200-1:
+				self.y+=2
+			if self.x<42:
+				self.x+=1	
+		if self.__boost==1:
+			if self.y+32<self.c+200-1:
+				self.y+=3
+			if self.x<42:
+				self.x+=1	
+
+	def left1(self):
+		if self.__boost==0:
+			if self.y-1>self.c:
+				self.y-=1
+				if self.x<42:
+					self.x+=1	
+			else:
+				self.y+=1
+		if self.__boost==1:
+			if self.y-2>self.c:
+				self.y-=2
+				if self.x<42:
+					self.x+=1	
+
+			else:
+				self.y+=2
+	@property
+	def drog(self):
+		return self.__fc
+	def drogon(self):
+		self.drox.append(self.x+1)
+		self.droy.append(self.y+30)
+		self.checkr2.append(0)
+		self.flg2.append(0)
+
+		for i in range(len(self.droy)):
+			if i!=len(self.droy)-1:
+				if self.flg2[i]==0 and self.droy[i]<=1999:
+					board.canvas[self.drox[i]][self.droy[i]]=' '
+				elif self.flg2[i]==1 and self.droy[i]<=1999:
+					board.canvas[self.drox[i]][self.droy[i]]='$'
+					self.flg2[i]=0
+				elif self.flg2[i]==2 and self.droy[i]<=1999:
+					board.canvas[self.drox[i]][self.droy[i]]='N'
+					self.flg2[i]=0
+				elif self.flg2[i]==3 and self.droy[i]<=1999:
+					board.canvas[self.drox[i]][self.droy[i]]='M'
+					self.flg2[i]=0
+
+				if self.checkr2[i]==0:
+					self.droy[i]+=4
+			if(self.droy[i]>=self._c+200) or (self.droy[i]>1999):
+				self.checkr2[i]=1
+			if self.checkr2[i]==0:	
+				
+				if board.canvas[self.drox[i]][self.droy[i]]=='$':
+					self.flg2[i]=1
+				if board.canvas[self.drox[i]][self.droy[i]]=='N':
+					self.flg2[i]=2
+				if board.canvas[self.drox[i]][self.droy[i]]=='M':
+					self.flg2[i]=3
+
+				for kk in range(0,4):
+					ft=0
+					if board.canvas[self.drox[i]][self.droy[i]-kk]=='|' or  board.canvas[self.drox[i]][self.droy[i]-kk]=='/' or  board.canvas[self.drox[i]][self.droy[i]-kk]=='-' or  board.canvas[self.drox[i]][self.droy[i]-kk]=='\\':
+						for k in range(-5,7):
+							for l in range(-5,7):
+								if board.canvas[self.drox[i]+k][self.droy[i]+l-kk]!='o' and board.canvas[self.drox[i]+k][self.droy[i]+l-kk]!='X':
+									board.canvas[self.drox[i]+k][self.droy[i]+l-kk]=' '
+									ft=1
+									self.checkr2[i]=1	
+					elif board.canvas[self.drox[i]][self.droy[i]-kk]=='@':
+						board.canvas[self.drox[i]][self.droy[i]-kk]=' '
+						board.canvas[self.drox[i]+1][self.droy[i]-kk]=' '
+						ft=1
+						self.checkr2[i]=1	
+				if ft==0:	
+				    board.canvas[self.drox[i]][self.droy[i]]='o'
+							    
+	def drogon1(self):
+		for i in range(len(self.droy)):
+			if self.flg2[i]==0 and self.droy[i]<=1999:
+				board.canvas[self.drox[i]][self.droy[i]]=' '
+			elif self.flg2[i]==1 and self.droy[i]<=1999:
+				board.canvas[self.drox[i]][self.droy[i]]='$'
+				self.flg2[i]=0
+			elif self.flg2[i]==2 and self.droy[i]<=1999:
+				board.canvas[self.drox[i]][self.droy[i]]='N'
+				self.flg2[i]=0
+			elif self.flg2[i]==3 and self.droy[i]<=1999:
+				board.canvas[self.drox[i]][self.droy[i]]='M'
+				self.flg2[i]=0
+					
+
+			if self.checkr2[i]==0:
+				self.droy[i]+=4
+			if(self.droy[i]>=self._c+200) or (self.droy[i]>1999):
+				self.checkr2[i]=1
+			if self.checkr2[i]==0:	
+				if board.canvas[self.drox[i]][self.droy[i]]=='$':
+					self.flg2[i]=1
+				if board.canvas[self.drox[i]][self.droy[i]]=='N':
+					self.flg2[i]=2
+				if board.canvas[self.drox[i]][self.droy[i]]=='M':
+					self.flg2[i]=3
+
+				for kk in range(0,4):
+					ft=0
+					if board.canvas[self.drox[i]][self.droy[i]-kk]=='|' or  board.canvas[self.drox[i]][self.droy[i]-kk]=='/' or  board.canvas[self.drox[i]][self.droy[i]-kk]=='-' or  board.canvas[self.drox[i]][self.droy[i]-kk]=='\\':
+						for k in range(-5,7):
+							for l in range(-5,7):
+								if board.canvas[self.drox[i]+k][self.droy[i]+l-kk]!='o' and board.canvas[self.drox[i]+k][self.droy[i]+l-kk]!='X' :
+									board.canvas[self.drox[i]+k][self.droy[i]+l-kk]=' '
+									ft=1
+									self.checkr2[i]=1	
+					elif board.canvas[self.drox[i]][self.droy[i]-kk]=='@':
+						board.canvas[self.drox[i]][self.droy[i]-kk]=' '
+						board.canvas[self.drox[i]+1][self.droy[i]-kk]=' '
+						ft=1
+						self.checkr2[i]=1	
+				if ft==0:	
+				    board.canvas[self.drox[i]][self.droy[i]]='o'
+
+
 cor=mmt(46,40,4)

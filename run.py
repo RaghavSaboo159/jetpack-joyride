@@ -26,11 +26,11 @@ for j in range(220,1800,random.randint(80,120)):
     en[itr].define()
     itr+=1
 itr=0        
-for j in range(300,1800,random.randint(500,600)):
+for j in range(300,1800,random.randint(400,500)):
     run.append(speed(j))
     run[itr].pcoin()
     itr+=1
-    ro=random.randint(250,400)
+    ro=random.randint(250,399)
     if j+ro<2000:
         run.append(speed(j+ro))
         run[itr].pcoin1()
@@ -47,27 +47,27 @@ for j in range(300,1800,random.randint(500,600)):
         itr+=1
 
 itr=0
-for j in range(260,1800,random.randint(170,250)):
+for j in range(260,1800,random.randint(100,120)):
     coins.append(coin(j))
     coins[itr].pcoin()
     itr+=1
-    ro=random.randint(125,169)
+    ro=random.randint(80,99)
     if j+ro<1800:
         coins.append(coin(j+ro))
         coins[itr].pcoin1()
         itr+=1
 
 itr=0
-for j in range(210,1800,random.randint(175,225)):
+for j in range(210,1800,random.randint(150,170)):
     obss.append(obst(j))
     obss[itr].obs1()
     itr+=1
-    ro=random.randint(125,174)
+    ro=random.randint(115,140)
     if j+ro<1800:
         obss.append(obst(j+ro))
         obss[itr].obs2()
         itr+=1
-for j in range(205,1800,random.randint(175,225)):
+for j in range(205,1800,random.randint(150,170)):
     obss.append(obst1(j))
     obss[itr].obs1()
     itr+=1
@@ -80,7 +80,7 @@ lint=4
 ti=time.time()
 sti=time.time()
 lo=0
-
+ft=0
 with open("a.txt") as file_in:
     lines = file_in.readlines()
 for i in range(23,23+len(lines)):
@@ -102,27 +102,27 @@ os.system('cls' if os.name=='nt' else 'clear')
 
 while True:
     print('\033[0;0H')
-    if cor.booster()==0:
+    if cor.booster==0:
         c='deactivated '
     else:
         c='activated '
-    if cor.cshield()==0:
+    if cor.cshield==0:
         d='deactivated '
     else:
         d='activated '
-    print('score =',cor.call(),'    life =',cor.call1(),'     time elapsed =',"{:.0f}".format(time.time()-sti),'       shield =',d,'       nitros =',c)
-    if (cor.xcor()<=43):
+    print('score =',cor.call,'    life =',cor.call1,'     time left =',"{:.0f}".format(600-time.time()+sti),'       shield =',d,'       nitros =',c,'   elife = ',cor.calll1,' ')
+    if (cor.xcor<=43):
         for i in range(xr,xr+len(lnes)):
             for j in range(1970,1970+len(lnes[i-xr])):
                 board.canvas[i][j]=' '            
 
-        for i in range(cor.xcor(),cor.xcor()+len(lnes)):
-            for j in range(1970,1970+len(lnes[i-cor.xcor()])):
-                if lnes[i-cor.xcor()][j-1970] == '\t' or lnes[i-cor.xcor()][j-1970]=='\n':
+        for i in range(cor.xcor,cor.xcor+len(lnes)):
+            for j in range(1970,1970+len(lnes[i-cor.xcor])):
+                if lnes[i-cor.xcor][j-1970] == '\t' or lnes[i-cor.xcor][j-1970]=='\n':
                     board.canvas[i][j]=' '
                 else :
-                    board.canvas[i][j]=lnes[i-cor.xcor()][j-1970]            
-        xr=cor.xcor()            
+                    board.canvas[i][j]=lnes[i-cor.xcor][j-1970]            
+        xr=cor.xcor            
     else:    
         for i in range(xr,xr+len(lnes)):
             for j in range(1970,1970+len(lnes[i-xr])):
@@ -137,30 +137,29 @@ while True:
         xr=43            
 
     for i in range(len(mag)):
-        if mag[i].y-cor.ycor()>=0 and mag[i].y-cor.ycor()<=30:
-            cor.pos1()
-            if cor.y+1<itr+200-1:
-                cor.y+=2 
-            cor.pos()
+        if mag[i].y-cor.ycor>=0 and mag[i].y-cor.ycor<=30:
+            if (ft==0 and cor.drog==0) or (ft==1 and cor.drog==1):
+                cor.pos1()
+                if cor.y+1<itr+200-1:
+                    cor.y+=2 
+                cor.pos()
 
-        if mag[i].y-cor.ycor()<0 and cor.ycor()-mag[i].y<=30:
-            cor.pos1()
-            if cor.y-1>itr:
-                cor.y-=1
-            cor.pos()
+        if mag[i].y-cor.ycor<0 and cor.ycor-mag[i].y<=30:
+            if (ft==0 and cor.drog==0) or (ft==1 and cor.drog==1):
+                cor.pos1()
+                if cor.y-1>itr:
+                    cor.y-=1
+                cor.pos()
     for i in range(0,50):
         for j in range(0+itr, 200+itr):
                 if board.canvas[i][j]=='X' and i<5:
                     print(Fore.BLUE + board.canvas[i][j], end="")
-
-                elif cor.cshield()==1 and ((i==cor.xcor() and j==cor.ycor()) or (i==cor.xcor()+1 and j==cor.ycor()) or (i==cor.xcor()+1 and j==cor.ycor()+1) or (i==cor.xcor()+1 and j==cor.ycor()-1) or (i==cor.xcor()+2 and j==cor.ycor()) or (i==cor.xcor()+2 and j==cor.ycor()-1) or (i==cor.xcor()+2 and j==cor.ycor()+1)):
-                    print(Fore.WHITE + board.canvas[i][j], end="")
-                elif cor.cshield()==0 and ((i==cor.xcor() and j==cor.ycor()) or (i==cor.xcor()+1 and j==cor.ycor()) or (i==cor.xcor()+1 and j==cor.ycor()+1) or (i==cor.xcor()+1 and j==cor.ycor()-1) or (i==cor.xcor()+2 and j==cor.ycor()) or (i==cor.xcor()+2 and j==cor.ycor()-1) or (i==cor.xcor()+2 and j==cor.ycor()+1)):
+                elif cor.cshield==1 and ((i==cor.xcor and j==cor.ycor ) or (i==cor.xcor+1 and j==cor.ycor ) or (i==cor.xcor+1 and j==cor.ycor+1) or (i==cor.xcor+1 and j==cor.ycor-1) or (i==cor.xcor+2 and j==cor.ycor) or (i==cor.xcor+2 and j==cor.ycor-1) or (i==cor.xcor+2 and j==cor.ycor+1)):
                     print(Fore.CYAN + board.canvas[i][j], end="")
-
+                elif cor.cshield==0 and ((i==cor.xcor and j==cor.ycor ) or (i==cor.xcor+1 and j==cor.ycor ) or (i==cor.xcor+1 and j==cor.ycor+1) or (i==cor.xcor+1 and j==cor.ycor-1) or (i==cor.xcor+2 and j==cor.ycor) or (i==cor.xcor+2 and j==cor.ycor-1) or (i==cor.xcor+2 and j==cor.ycor+1)):
+                    print(Fore.WHITE + board.canvas[i][j], end="")
                 elif board.canvas[i][j]=='>':
                     print(Fore.YELLOW + board.canvas[i][j], end="")
-                
                 elif board.canvas[i][j]!='$' and i<49:
                     print(Fore.RED + Style.BRIGHT + board.canvas[i][j], end="")
                 elif board.canvas[i][j]=='$':
@@ -171,17 +170,20 @@ while True:
         print()
     
     if (time.time()-ti)>10:
-        cor.vul()
+        cor.shield=0
+    stt=time.time()
     def alarmhandler(signum, frame):
         raise AlarmException
 
-    def user_input(timeout=0.1):
+    def user_input(timeout=0.06):
         signal.signal(signal.SIGALRM, alarmhandler)
         signal.setitimer(signal.ITIMER_REAL, timeout)
-        
+        # tt = time.time()
         try:
             text = getChar()()
             signal.alarm(0)
+            # wt = time.time()
+            # time.sleep(0.1-wt+tt)
             return text
         except AlarmException:
             pass
@@ -189,15 +191,38 @@ while True:
         return ''
 
     char = user_input()
-    if char=='d' or char=='D':
-        cor.pos1()
-        cor.right()
-        cor.pos()
-        if lo<1800:
-            cor.bull()
-        else:
-            cor.bull1()    
+    cor.drogon1()
     
+    if char=='d' or char=='D':
+        if ft==1 and cor.drog==0:
+            if lo%2:
+                cor.clear2()
+                cor.right1()
+                cor.post1()
+                if lo%6==0:
+                    cor.drogon()
+                else:
+                    cor.drogon1()
+                    
+            else:
+                cor.clear1()
+                cor.right1()
+                cor.post2()
+
+                if lo%6==0:
+                    cor.drogon()
+                else:
+                    cor.drogon1()
+           
+        else:
+            cor.pos1()
+            cor.right()
+            cor.pos()
+            if lo<1800:
+                cor.bull()
+            else:
+                cor.bull1()    
+
     elif char==' ':
         cor.invin()
         ti=time.time()
@@ -205,30 +230,72 @@ while True:
             cor.bull()
         else:
             cor.bull1()    
+    elif char=='b' or char=='B':
+        ft=1
+        cor.start()
+        if lo%2:
+            cor.post1()
+        else:
+            cor.post2()       
+
     elif char=='a' or char=='A':
-        cor.pos1()
-        cor.left()
-        cor.pos()
-        if lo<1800:
-            cor.bull()
+        if ft==1 and cor.drog==0:
+            if lo%2:
+                cor.clear2()
+                cor.left1()
+                cor.post1()
+                if lo%6==0:
+                    cor.drogon()
+                else:
+                    cor.drogon1()
+
+            else:
+                cor.clear1()
+                cor.left1()
+                cor.post2()
+                if lo%6==0:
+                    cor.drogon()
+                else:
+                    cor.drogon1()
+           
         else:
-            cor.bull1()    
+            cor.pos1()
+            cor.left()
+            cor.pos()
+            if lo<1800:
+                cor.bull()
+            else:
+                cor.bull1()    
+     
     elif char=='w' or char=='W':
-        cor.pos1()
-        cor.up()
-        cor.pos()
-        if lo<1800:
-            cor.bull()
+        if ft==1 and cor.drog==0:
+            if lo%2:
+                cor.clear2()
+                cor.up1()
+                cor.post1()
+                if lo%6==0:
+                    cor.drogon()
+                else:
+                    cor.drogon1()
+
+            else:
+                cor.clear1()
+                cor.up1()
+                cor.post2()
+                if lo%6==0:
+                    cor.drogon()
+                else:
+                    cor.drogon1()
+           
         else:
-            cor.bull1()    
-    elif char=='s' or char=='S':
-        cor.pos1()
-        cor.down()
-        cor.pos()
-        if lo<1800:
-            cor.bull()
-        else:
-            cor.bull1()    
+            cor.pos1()
+            cor.up()
+            cor.pos()
+            if lo<1800:
+                cor.bull()
+            else:
+                cor.bull1()    
+
     elif char=='j' or char=='J':
         if lo<1800:
             cor.bullet()
@@ -240,13 +307,34 @@ while True:
     elif char=='q'or char=='Q':
         quit()
     else:
-        cor.pos1()
-        cor.gravity()
-        cor.pos()
-        if lo<1800:
-            cor.bull()
+        if ft==1 and cor.drog==0:
+            if lo%2:
+                cor.clear2()
+                cor.gravity1()
+                cor.post1()
+                if lo%6==0:
+                    cor.drogon()
+                else:
+                    cor.drogon1()
+
+            else:
+                cor.clear1()
+                cor.gravity1()
+                cor.post2()
+                if lo%6==0:
+                    cor.drogon()
+                else:
+                    cor.drogon1()
+           
         else:
-            cor.bull1()    
+            cor.pos1()
+            cor.gravity()
+            cor.pos()
+            if lo<1800:
+                cor.bull()
+            else:
+                cor.bull1()    
+
     if (itr+200<2000):
         itr += 1
     else:
@@ -254,11 +342,31 @@ while True:
             cor.enem(xr) 
         else:
             cor.enem1()  
-    cor.inc()
-    if cor.call1()<0:
+    cor.c=1
+    if cor.call1<0 or cor.calll1<0 or (600-time.time()+sti)<0:
+        with open("e.txt") as fl_in:
+            les = fl_in.readlines()
+        for i in range(0,50):
+            for j in range(0+itr, 200+itr):
+                board.canvas[i][j]=' '
+        for i in range(5,5+len(les)):
+            for j in range(itr+50,itr+50+len(les[i-5])):
+                if les[i-5][j-itr-50] == '\t' or les[i-5][j-itr-50]=='\n':
+                    board.canvas[i][j]=' '
+                else :
+                    board.canvas[i][j]=les[i-5][j-itr-50]            
+        
+        print('\033[0;0H')
+        for i in range(0,50):
+            for j in range(0+itr, 200+itr):
+                 print(Fore.GREEN + board.canvas[i][j], end="")
+            print()
         quit()
-    lipr=cor.call1()
+    lipr=cor.call1
     if((lint-lipr)>=1):
         time.sleep(0.5)
-    lint=cor.call1()
-    lo+=1        
+    lint=cor.call1
+    lo+=1
+    edd=time.time()
+    if((edd-stt)<=0.06):
+        time.sleep(0.06-edd+stt)        
