@@ -140,15 +140,15 @@ while True:
         if mag[i].y-cor.ycor>=0 and mag[i].y-cor.ycor<=30:
             if (ft==0 and cor.drog==0) or (ft==1 and cor.drog==1):
                 cor.pos1()
-                if cor.y+1<itr+200-1:
-                    cor.y+=2 
+                if cor.ycor+1<itr+200-1:
+                    cor.ycor=2 
                 cor.pos()
 
         if mag[i].y-cor.ycor<0 and cor.ycor-mag[i].y<=30:
             if (ft==0 and cor.drog==0) or (ft==1 and cor.drog==1):
                 cor.pos1()
-                if cor.y-1>itr:
-                    cor.y-=1
+                if cor.ycor-1>itr:
+                    cor.ycor=-1
                 cor.pos()
     for i in range(0,50):
         for j in range(0+itr, 200+itr):
@@ -178,12 +178,9 @@ while True:
     def user_input(timeout=0.06):
         signal.signal(signal.SIGALRM, alarmhandler)
         signal.setitimer(signal.ITIMER_REAL, timeout)
-        # tt = time.time()
         try:
             text = getChar()()
             signal.alarm(0)
-            # wt = time.time()
-            # time.sleep(0.1-wt+tt)
             return text
         except AlarmException:
             pass
